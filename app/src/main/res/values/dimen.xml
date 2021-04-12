@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_point_five">0.05dp</dimen>
+    <dimen name="padding_zero">0dp</dimen>
+    <dimen name="padding_one">1dp</dimen>
+    <dimen name="padding_two">2dp</dimen>
+    <dimen name="padding_three">3dp</dimen>
+    <dimen name="padding_four">4dp</dimen>
+    <dimen name="padding_five">5dp</dimen>
+    <dimen name="padding_six">6dp</dimen>
+    <dimen name="padding_seven">7dp</dimen>
+    <dimen name="padding_eight">8dp</dimen>
+    <dimen name="padding_nine">9dp</dimen>
+    <dimen name="padding_ten">10dp</dimen>
+    <dimen name="padding_eleven">11dp</dimen>
+    <dimen name="padding_twelve">12dp</dimen>
+    <dimen name="padding_thirteen">13dp</dimen>
+    <dimen name="padding_fourteen">14dp</dimen>
+    <dimen name="padding_fifteen">15dp</dimen>
+    <dimen name="padding_sixteen">16dp</dimen>
+    <dimen name="padding_thirty">30dp</dimen>
+    <dimen name="padding_twenty">20dp</dimen>
+    <dimen name="padding_fifty_five">55dp</dimen>
+    <dimen name="padding_fifty">50dp</dimen>
+    <dimen name="padding_hundred">100dp</dimen>
+    <dimen name="padding_one_nine_seven">197dp</dimen>
+    <dimen name="padding_three_one_five">315dp</dimen>
+    <dimen name="sp_fourten">14sp</dimen>
+    <dimen name="sp_sixteen">16sp</dimen>
+
+</resources>

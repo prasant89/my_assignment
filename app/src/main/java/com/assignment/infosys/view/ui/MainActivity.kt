@@ -3,13 +3,13 @@ package com.assignment.infosys.view.ui
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.assignment.infosys.ConstantUtility
 import com.assignment.infosys.R
 import com.assignment.infosys.data.Row
 import com.assignment.infosys.view.adapter.NewsAdapter
@@ -18,6 +18,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,57 +31,56 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         viewModelInit()
+        newsListadapter = NewsAdapter(newsListData)
+
+        recyclerViewNews!!.adapter = newsListadapter
+        recyclerViewNews!!.layoutManager = LinearLayoutManager(this)
+        recyclerViewNews!!.itemAnimator = DefaultItemAnimator()
+        recyclerViewNews!!.isNestedScrollingEnabled = true
     }
 
     fun viewModelInit() {
         newsViewModel = ViewModelProviders.of(this).get(NewsViewModel::class.java)
-        makeNewsAPIRequestForTitle()
-        makeNewsAPIRequest()
 
-        //** Set the colors of the Pull To Refresh View
-        swipeContainer.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(this, R.color.purple_200))
+
+        makeNewsAPIRequest()
+        makeNewsAPITitle()
+
+
+        swipeContainer.setProgressBackgroundColorSchemeColor(
+            ContextCompat.getColor(this, R.color.purple_200))
         swipeContainer.setColorSchemeColors(Color.WHITE)
         swipeContainer.setOnRefreshListener {
-            refreshTimes =+ refreshTimes + 10
+            refreshTimes = +refreshTimes + ConstantUtility.REFRESH_TIME
             recyclerViewNews.adapter = newsListadapter
             swipeContainer.isRefreshing = false
         }
-}
-    //Call Webservice Api
+    }
+
     fun makeNewsAPIRequest() {
         newsViewModel.observeNewsResponce().observe(this, Observer {
             if (it != null) {
-                GlobalScope.launch(Dispatchers.Main) {
-                    progressBar.visibility = View.INVISIBLE
+                GlobalScope.launch(Dispatchers.IO) {
                     newsListData = it
-                    newsListadapter = NewsAdapter(newsListData)
-                    newsListadapter.notifyDataSetChanged()
-                    setUpRecyclerView()
+                    launch(Dispatchers.Main) {
+                        progressBar.visibility = View.INVISIBLE
+                        newsListadapter.setAdapterListData(newsListData)
+                    }
                 }
             }
-            Toast.makeText(applicationContext, "" + it.toString(), Toast.LENGTH_SHORT).show()
         })
     }
 
-    //Call Webservice Api
-    fun makeNewsAPIRequestForTitle() {
+    fun makeNewsAPITitle() {
         newsViewModel.observeNewsTitleResponce().observe(this, Observer {
             if (it != null) {
                 GlobalScope.launch(Dispatchers.Main) {
                     progressBar.visibility = View.INVISIBLE
-                    this@MainActivity.supportActionBar?.title = ""+it
+                    this@MainActivity.supportActionBar?.title = it
                 }
             }
-            Toast.makeText(applicationContext, "" + it.toString(), Toast.LENGTH_SHORT).show()
         })
-    }
-
-    //Bind RecyclerView
-    private fun setUpRecyclerView() {
-        recyclerViewNews!!.layoutManager = LinearLayoutManager(this)
-        recyclerViewNews!!.adapter = newsListadapter
-        recyclerViewNews!!.itemAnimator = DefaultItemAnimator()
-        recyclerViewNews!!.isNestedScrollingEnabled = true
     }
 }

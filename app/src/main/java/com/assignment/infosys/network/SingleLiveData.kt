@@ -8,7 +8,7 @@ import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
 
 class SingleLiveData<T> : MutableLiveData<T>() {
-    //Single Obserable Live Data
+
     private val mPending = AtomicBoolean(false)
 
     @MainThread
@@ -17,7 +17,6 @@ class SingleLiveData<T> : MutableLiveData<T>() {
             Timber.d(TAG, "Multiple observers registered but only one will be notified of changes.")
         }
 
-        // Observe the internal MutableLiveData
         super.observe(owner, object : Observer<T> {
             override fun onChanged(t: T?) {
                 if (mPending.compareAndSet(true, false)) {
@@ -33,9 +32,6 @@ class SingleLiveData<T> : MutableLiveData<T>() {
         super.setValue(t)
     }
 
-    /**
-     * Used for cases where T is Void, to make calls cleaner.
-     */
     @MainThread
     fun call() {
         setValue(null)
