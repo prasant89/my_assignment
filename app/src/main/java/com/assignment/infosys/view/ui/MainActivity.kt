@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,19 +34,17 @@ class MainActivity : AppCompatActivity() {
         viewModelInit()
         newsListadapter = NewsAdapter(newsListData)
 
-        recyclerViewNews!!.adapter = newsListadapter
-        recyclerViewNews!!.layoutManager = LinearLayoutManager(this)
-        recyclerViewNews!!.itemAnimator = DefaultItemAnimator()
-        recyclerViewNews!!.isNestedScrollingEnabled = true
+        recyclerViewNews.adapter = newsListadapter
+        recyclerViewNews.layoutManager = LinearLayoutManager(this)
+        recyclerViewNews.itemAnimator = DefaultItemAnimator()
+        recyclerViewNews.isNestedScrollingEnabled = true
     }
 
     fun viewModelInit() {
         newsViewModel = ViewModelProviders.of(this).get(NewsViewModel::class.java)
 
-
         makeNewsAPIRequest()
         makeNewsAPITitle()
-
 
         swipeContainer.setProgressBackgroundColorSchemeColor(
             ContextCompat.getColor(this, R.color.purple_200))

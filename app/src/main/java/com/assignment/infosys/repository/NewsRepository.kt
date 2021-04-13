@@ -1,6 +1,5 @@
 package com.assignment.infosys.repository
 
-import android.app.Application
 import com.assignment.infosys.data.NewsResponceJson
 import com.assignment.infosys.data.Row
 import com.assignment.infosys.network.NewsEndpoints
@@ -10,7 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class NewsRepository(application: Application) {
+class NewsRepository() {
     var rowListData: SingleLiveData<List<Row>> = SingleLiveData()
     var title: SingleLiveData<String> = SingleLiveData()
     fun newsApiRequest():SingleLiveData<List<Row>> {

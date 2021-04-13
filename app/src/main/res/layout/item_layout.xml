@@ -39,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
+            android:textColor="@color/black"
             android:layout_marginStart="@dimen/padding_eight"
             android:layout_marginTop="@dimen/padding_eight"
             android:layout_marginEnd="@dimen/padding_eight"
