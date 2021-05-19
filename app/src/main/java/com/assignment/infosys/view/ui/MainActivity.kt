@@ -14,10 +14,12 @@ import com.assignment.infosys.R
 import com.assignment.infosys.data.Row
 import com.assignment.infosys.view.adapter.NewsListAdapter
 import com.assignment.infosys.viewmodel.NewsViewModel
+import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class MainActivity : AppCompatActivity() {
@@ -70,10 +72,10 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun makeNewsAPITitle() {
+    fun  makeNewsAPITitle() {
         newsViewModel.observeNewsTitleResponce().observe(this, Observer {
             if (it != null) {
-                GlobalScope.launch(Dispatchers.Main) {
+                lifecycleScope.launch(Dispatchers.Main) {
                     progressBar.visibility = View.INVISIBLE
                     this@MainActivity.supportActionBar?.title = it
                 }
